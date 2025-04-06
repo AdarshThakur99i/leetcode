@@ -1,11 +1,11 @@
 class Solution {
 public:
 void solve(int idx,int n,int k,vector<int> &temp,vector<vector<int>> &ans) {
-    if(idx==n+2 || temp.size()>k) return;
+ 
     if(temp.size()==k) {
        ans.push_back(temp);
        return;
-    }
+    }   if(idx>n) return;
 
     temp.push_back(idx);
     solve(idx+1,n,k,temp,ans);
