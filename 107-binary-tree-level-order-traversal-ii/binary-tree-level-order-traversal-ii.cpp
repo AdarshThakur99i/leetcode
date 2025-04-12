@@ -12,12 +12,14 @@
 class Solution {
 public:
 
-    void dfs(TreeNode* root,map<int,vector<int>,greater<int>> &mp,int k) {
+    void dfs(TreeNode* root,vector<vector<int>> &ans,int k) {
           if(root==NULL) return;
-
-          mp[k].push_back(root->val);
-          dfs(root->left,mp,k+1);
-          dfs(root->right,mp,k+1);
+if(ans.size()<=k) {
+    ans.push_back({});
+}
+          ans[k].push_back(root->val);
+          dfs(root->left,ans,k+1);
+          dfs(root->right,ans,k+1);
 
 
 
@@ -25,17 +27,12 @@ public:
 
     }
     vector<vector<int>> levelOrderBottom(TreeNode* root) {
-      map<int,vector<int>,greater<int>> mp;
+  
         vector<vector<int>> ans;
-        dfs(root,mp,0);
 
-        for(auto it: mp) {
+        dfs(root,ans,0);
 
-ans.push_back(it.second);
-
-
-
-        }
+      reverse(ans.begin(),ans.end());
 
         return ans;
         
