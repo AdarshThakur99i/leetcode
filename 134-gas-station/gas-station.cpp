@@ -1,10 +1,9 @@
 class Solution {
 public:
     int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
-         if(gas.size()==1 && cost[0]>gas[0]){ return -1;} 
-         else if(gas.size()==1 && cost[0]>=gas[0]) {
-            return 0;
-         }
+      if (gas.size() == 1)
+    return gas[0] >= cost[0] ? 0 : -1;
+
         int totalCost=0;
       vector<int> idx;
         for(int i=0; i<cost.size(); i++) {      
