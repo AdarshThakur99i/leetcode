@@ -1,9 +1,9 @@
 class Solution {
 public:
     int countCompleteSubarrays(vector<int>& nums) {
-        unordered_map<int,int> mp;
+        unordered_set<int> mp;
         for(int i=0; i<nums.size(); i++) {
-            mp[nums[i]]++;
+           mp.insert(nums[i]);
         }
 
         unordered_map<int,int> smp;
@@ -11,17 +11,20 @@ public:
         int i=0;
          int j=0;
          int cnt=0;
-         for(int i=0; i<nums.size(); i++) {
-            smp.clear();
-            for(int j=i; j<nums.size(); j++) {
-               smp[nums[j]]++;
-               if(smp.size()==mp.size()) cnt++;
-               if(smp.size()>mp.size()) break;
-
+         while(j<nums.size()) {
+         smp[nums[j]]++;
+            while(smp.size()==mp.size()) {
+               cnt+=nums.size()-j;
+              smp[nums[i]]--;
+                if(smp[nums[i]]==0) smp.erase(nums[i]);
+            i++;
             }
            
+            j++;
+
          }
 
+      
 
          return cnt;
     }
