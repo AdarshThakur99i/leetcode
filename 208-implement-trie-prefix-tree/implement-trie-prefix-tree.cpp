@@ -1,39 +1,84 @@
 class Trie {
 public:
-unordered_set<string> st;
+
+struct trieNode {
+      bool isEnd;
+      trieNode* children[26];
+};
+
+trieNode* getNode() {
+        trieNode* node=new trieNode();
+        node->isEnd=false;
+        for(int i=0; i<26; i++) {
+            node->children[i]=NULL;
+        }
+
+        return node;
+
+}
+
+  trieNode* root;
+
     Trie() {
-        st.clear();
+        root=getNode();
+        
     }
     
     void insert(string word) {
-        st.insert(word);
+        trieNode* crawler=root;
+
+        for(int i=0; i<word.size(); i++) {
+          int idx=word[i]-'a';
+          if(crawler->children[idx]==NULL) {
+            crawler->children[idx]=getNode();
+
+          }
+          crawler=crawler->children[idx];
+
+
+        }
+  
+
+  crawler->isEnd=true;
         
     }
     
     bool search(string word) {
-        if(st.find(word) !=st.end()) {
+        trieNode* crawler=root;
+        for(int i=0; i<word.size(); i++) {
+               int idx=word[i]-'a';
+               if(crawler->children[idx]==NULL) {
+                return false;
+               }
+
+               crawler=crawler->children[idx];
+
+        }
+
+        if(crawler!=NULL && crawler->isEnd==true) {
             return true;
         }
-        
         return false;
+        
     }
     
     bool startsWith(string prefix) {
-      
-      for(string x : st){
-           
-           if(x.size()<prefix.size()) {
-            continue;
-           }
-            string ss=x.substr(0,prefix.size());
-            if(ss==prefix) {
-                return  true;
-            }
-        }
+       trieNode* crawler=root;
+       int i=0;
+       for( i=0; i<prefix.size(); i++) {
+        int idx=prefix[i]-'a';
+             if(crawler->children[idx]==NULL) {
+                return false;
+             }
 
-        return false;
+crawler=crawler->children[idx];
+          
 
-        
+       }   if(i==prefix.size()) {
+                return true;
+             }
+       return false;
+
     }
 };
 
