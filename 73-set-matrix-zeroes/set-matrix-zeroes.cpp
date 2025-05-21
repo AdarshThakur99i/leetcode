@@ -1,19 +1,24 @@
 class Solution {
 public:
     void setZeroes(vector<vector<int>>& matrix) {
-         vector<vector<int>> vis=matrix;
+         vector<int> col(matrix[0].size(),0);
+         vector<int> row(matrix.size(),0);
 
        for(int i=0; i<matrix.size(); i++) {
         for(int j=0; j<matrix[0].size(); j++) {
-            if(vis[i][j]==0) {
-           for(int k=0; k<matrix.size(); k++) {
-            matrix[k][j]=0;
-           }
+            if(matrix[i][j]==0) {
+             col[j]=1;
+             row[i]=1;
+         
 
-           for(int k=0; k<matrix[0].size(); k++) {
-            matrix[i][k]=0;
-           }
+            }
+        }
+       }
+       for(int i=0; i<matrix.size(); i++) {
+        for(int j=0; j<matrix[0].size(); j++) {
 
+            if(col[j]==1 || row[i]==1) {
+                matrix[i][j]=0;
             }
         }
        }
