@@ -1,21 +1,51 @@
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
-         vector<int> temp;
-         unordered_map<int,int> mp;
-         unordered_set<int> st;
+        int count1=0;
+        int maj1=0;
+        int count2=0;
+        int maj2=0;
+        for(int i=0; i<nums.size(); i++) {
+             if(nums[i]==maj1) {
+                count1++;
+             }
+             else if(nums[i]==maj2) {
+                count2++;
+             }
 
-         for(int i=0; i<nums.size(); i++) {
+             else if(count1==0) {
+                count1=1;
+                maj1=nums[i];
+        }
+          else if(count2==0) {
+            count2=1;
+            maj2=nums[i];
+          }
+          else {
+            count1--;
+            count2--;
+          }
 
-            mp[nums[i]]++;
-            if(mp[nums[i]]>(nums.size()/3)) {
-                st.insert(nums[i]);
-            }
-         }
-       for(auto it:st) {
-        temp.push_back(it);
-       }
+        }
+        int freq1=0;
+        int freq2=0;
+        vector<int> temp;
+        for(int i=0; i<nums.size(); i++) {
+          if(nums[i]==maj1) {
+            freq1++;
+            
+          }
+          if(nums[i]==maj2) {
+            freq2++;
+          }
 
-         return temp;
+        }
+        if(freq1>floor(nums.size()/3)) temp.push_back(maj1);
+        if(maj1!=maj2) {
+        if(freq2>floor(nums.size()/3)) temp.push_back(maj2);}
+
+        return temp;
+
+
     }
 };
