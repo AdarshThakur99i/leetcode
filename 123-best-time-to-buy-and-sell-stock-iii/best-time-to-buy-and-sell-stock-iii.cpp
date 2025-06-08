@@ -1,26 +1,35 @@
 class Solution {
 public:
 
-    int check(vector<int> &prices,int i,int buy,int k,vector<vector<vector<int>>> &dp) {
-        if(k>=2 || i>=prices.size()) return 0;
-          int profit=0;
-          if(dp[i][buy][k]!=-1) return dp[i][buy][k];
-        if(!buy) {
-            int buy_1=-prices[i]+check(prices,i+1,1,k,dp);
-            int not_buy=check(prices,i+1,0,k,dp);
-            profit=max(buy_1,not_buy);
+
+    int maxProfit(vector<int>& prices) {
+        vector<vector<vector<int>>> dp(prices.size()+1,vector<vector<int>>(2,vector<int>(3,0)));
+           for(int i=prices.size()-1; i>=0; i--) {
+            for(int j=0; j<2; j++) {
+                for(int k=0; k<=2; k++) {
+                    int profit=0;
+                    if(!j) {
+            int buy_1=-prices[i]+dp[i+1][1][k]; 
+            int not_buy=dp[i+1][0][k]; 
+            dp[i][j][k]=max(buy_1,not_buy);
+          
         }
-        if(buy) {
-            int sell=prices[i]+check(prices,i+1,0,k+1,dp);
-            int not_sell=check(prices,i+1,1,k,dp);
+        if(j) {
+           if(k<2) {
+            int sell=prices[i]+dp[i+1][0][k+1];
+            int not_sell=dp[i+1][1][k];
             profit=max(sell,not_sell);
+            dp[i][j][k] = profit;}
+            else {
+ dp[i][j][k] = dp[i + 1][1][k];
+            }
+           
         }
 
-        return dp[i][buy][k]=profit;
-    }
-    int maxProfit(vector<int>& prices) {
-        vector<vector<vector<int>>> dp(prices.size(),vector<vector<int>>(2,vector<int>(3,-1)));
-        return check(prices,0,0,0,dp);
+                }
+            }
+           }
+        return dp[0][0][0];
         
     }
 };
