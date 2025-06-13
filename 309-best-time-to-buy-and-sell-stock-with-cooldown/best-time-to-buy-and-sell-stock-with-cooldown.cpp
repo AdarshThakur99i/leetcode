@@ -1,23 +1,24 @@
 class Solution {
 public:
-    int check(vector<int> prices,int i,int buyed,vector<vector<int>> &dp) {
-         if(i>=prices.size()) {
-            return 0;
-
-         }
-         if(dp[i][buyed]!=-1) return dp[i][buyed];
-         int buy=0;
-     if(!buyed) {
-         buy=-prices[i]+check(prices,i+1,1,dp);}
-    int sell=0;    if(buyed) {
-         sell=prices[i]+check(prices,i+2,0,dp); }
-        int not_did =check(prices,i+1,buyed,dp);
-
-        return dp[i][buyed]=max({buy,sell,not_did});
-    }
+   
     int maxProfit(vector<int>& prices) {
-        vector<vector<int>> dp(prices.size(),vector<int>(2,-1));
-        return check(prices,0,0,dp);
+        int n=prices.size();
+        vector<vector<int>> dp(prices.size()+2,vector<int>(2,0));
+  dp[n][0] = 0;
+        dp[n][1] = 0;
+        for(int i=prices.size()-1; i>=0; i--) {
+            for(int j=0; j<2; j++) {
+                   
+         int buy=0;
+     if(!j) {
+         buy=-prices[i]+dp[i+1][1];
+    }  int sell=0; 
+     if(j) {
+         sell=prices[i]+dp[i+2][0];
+            
+        }int not_did =dp[i+1][j];
+         dp[i][j]=max({buy,sell,not_did});}}
+        return dp[0][0];
         
     }
 };
