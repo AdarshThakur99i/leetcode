@@ -5,8 +5,8 @@ public:
         int n=nums.size();
         vector<int> vis(nums.size(),0);
         for(int i=0; i<nums.size(); i++) {
-            for(int j=0; j<nums.size(); j++) {
-                 if(abs(i-j) <=k && nums[j]==key) {
+            for(int j=max(0,i-k); j<=min(n-1,i+k); j++) {
+                 if( nums[j]==key) {
                    if(vis[i]==0) {
                     temp.push_back(i);
                     vis[i]=1;
