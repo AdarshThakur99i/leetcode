@@ -1,19 +1,22 @@
 class Solution {
 public:
-long long maxi=LLONG_MIN;
-    void check(int n,long long product,long long sum,int i,int k) {
-        if(sum>n || i>n) return;
-       if(sum==n && k>=2) {
-           maxi=max(maxi,product);
-           return;
+    int check(int n,int i,int k) {
+         if(n==0 && k>=2) {
+           return 1;
+          
        }
+        if(n<0 || i>n) return 0;
+      
      
-       check(n,product*i,sum+i,i,k+1);
-   
-       check(n,product,sum,i+1,k);
+      int take= check(n-i,i,k+1);
+   if(take>0) {
+    take*=i;
+   }
+     int not_take=check(n,i+1,k);
+     return max(take,not_take);
     }
     int integerBreak(int n) {
-         check(n,1,0,1,0);
-         return maxi;
+        return check(n,1,0);
+      
     }
 };
