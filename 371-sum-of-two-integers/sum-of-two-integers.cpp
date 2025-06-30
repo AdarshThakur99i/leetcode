@@ -4,7 +4,7 @@ public:
 
 
       while(b!=0) {
-        unsigned carry=(unsigned)(a&b) << 1;
+        unsigned carry=(a&b) << 1;
         a=a^b;
         b=carry;
       }
