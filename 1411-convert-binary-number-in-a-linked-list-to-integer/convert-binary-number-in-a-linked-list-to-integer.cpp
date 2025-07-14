@@ -11,16 +11,11 @@
 class Solution {
 public:
     int getDecimalValue(ListNode* head) {
-        string num="";
-        while(head != NULL) {
-                num+= to_string(head->val);
-                head=head->next;
-        }long long res=0;
-        string binary =num;
-        for(int i=0; i<binary.size(); i++) {
-            if(binary[binary.size()-i-1]  == '1') {
-                 res+= pow(2,i);
-            }
+        long long res=0;
+
+        while(head!=NULL) {
+            res= (res<<1) | (head->val);
+            head=head->next;
         }
         return res;
     }
