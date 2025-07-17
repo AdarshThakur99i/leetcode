@@ -24,17 +24,14 @@ public:
     int maximumLength(vector<int>& nums, int k) {
         if(nums.size()==2) return 2;
         int maxi=1;
-
-        vector<vector<int>> dp(nums.size(),vector<int>(k+1,1));
-
-       for(int i=0; i<nums.size(); i++) {
-        for(int j=0; j<i; j++) {
-            int md=(nums[i]+nums[j])%k;
-
-            dp[i][md]=max(dp[i][md],dp[j][md]+1);
-            maxi=max(maxi,dp[i][md]);
+         vector<vector<int>> dp(nums.size(),vector<int>(k+1,1));
+        for(int i=0; i<nums.size(); i++) {
+            for(int j=0; j<i; j++) {
+               int md=(nums[i]+nums[j])%k;
+               dp[i][md]=max(dp[i][md],(dp[j][md]+1));
+               maxi=max(maxi,dp[i][md]);
+            }
         }
-       }
 
          return maxi;
     }
