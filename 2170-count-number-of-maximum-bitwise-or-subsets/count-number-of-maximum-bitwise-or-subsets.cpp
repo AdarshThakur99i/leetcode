@@ -1,28 +1,32 @@
 class Solution {
 public:
-    void check(vector<int> &nums,int &maxi,int i,int &cnt,int currOrr) {
+    int check(vector<int> &nums,int &maxi,int i,int currOrr) {
     
              if(i==nums.size()) {
                 if(currOrr>maxi) {
                     maxi=currOrr;
-                    cnt=1;
+                   return 1;
                 }
                 else if(currOrr==maxi) {
-                    cnt++;
+                 
+                    return 1;
                 }
-                return;
+                else {
+                    return 0;
+                }
+               
              }
                   
-             check(nums,maxi,i+1,cnt,currOrr | nums[i]);
-             check(nums,maxi,i+1,cnt,currOrr);
-
+           int take=  check(nums,maxi,i+1,currOrr | nums[i]);
+           int not_take=  check(nums,maxi,i+1,currOrr);
+         return take+not_take;
 
     }
     int countMaxOrSubsets(vector<int>& nums) {
       int maxi=INT_MIN;
       int cnt=0;
-      check(nums,maxi,0,cnt,0);
-      return cnt;
+     int res= check(nums,maxi,0,0);
+      return res;
 
     }
 };
