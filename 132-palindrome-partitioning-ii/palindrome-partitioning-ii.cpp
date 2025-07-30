@@ -31,14 +31,14 @@ public:
         if(s.size()==1) return 0;
         int cnt=0;
         vector<vector<bool>> dp(s.size(),vector<bool>(s.size(),false));
-        for(int i=0; i<s.size(); i++) {
-            dp[i][i]=true;
-        }
-        for(int l=2; l<=s.size(); l++) {
+        for(int l=1; l<=s.size(); l++) {
             for(int i=0; i+l-1<s.size(); i++) {
                 int j=i+l-1;
+                if(i==j) {
+                    dp[i][j]=true;
 
-                 if(i+1==j && s[i]==s[j]) {
+                }
+                else if(i+1==j && s[i]==s[j]) {
                     dp[i][j]=true;
                 }
                 else {
