@@ -26,6 +26,7 @@ public:
        }
        int n=total/4;
        if(total%4 !=0) return false;
+       sort(rbegin(matchsticks),rend(matchsticks));
        vector<int> sides(4,0);
 return check(matchsticks,sides,0,n);
     }
