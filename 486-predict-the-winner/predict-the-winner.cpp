@@ -1,23 +1,25 @@
 class Solution {
 public:
    int check(vector<int> &nums,int start,int end) {
-        
+        if(start>end) return 0;
         if(start==end) {
 return nums[end];
         }
-     int take=nums[start] - check(nums,start+1,end);
-     int take_last=nums[end] - check(nums,start,end-1);
+   int take=nums[start] + min(check(nums,start+2,end),check(nums,start+1,end-1));
+   int take_l= nums[end] + min(check(nums,start,end-2),check(nums,start+1,end-1));
        
 
-       return max(take,take_last);
+       return max(take,take_l);
     
    }
     
     bool predictTheWinner(vector<int>& nums) {
-        int total=0;
-        if(nums.size()==1) return true;
+        int total=accumulate(begin(nums),end(nums),0);
+         
+     if(nums.size()==1) return true;
       int res = check(nums,0,nums.size()-1);
-      if(res>=0) return true;
-        return false;
+      int p2=total-res;
+     
+        return (res>=p2);
     }
 };
