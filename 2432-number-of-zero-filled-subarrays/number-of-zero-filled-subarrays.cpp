@@ -4,7 +4,6 @@ public:
         int i=0;
         int j=0;
         long long cnt=0;
-unordered_map<int,int> mp;
         while(j<nums.size()) {
 if(nums[j]==0) {
     i=j;
