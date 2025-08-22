@@ -1,16 +1,18 @@
 class Solution {
 public:
     int maxSubarrays(vector<int>& nums) {
-        int ans = 0;
-        int score = 0;  // start with 0, meaning "start fresh"
+      int curr=~0;
+      int cnt=0;
+      for(int i=0; i<nums.size(); i++) {
+        curr=curr&nums[i];
 
-        for (int num : nums) {
-            score = (score == 0 ? num : (score & num));
-            if (score == 0) {
-                ++ans;
-            }
+        if(curr==0) {
+             curr=~0;
+             cnt++;
         }
+      }
 
-        return max(1, ans);
+
+       return max(cnt,1);
     }
 };
