@@ -1,37 +1,45 @@
 class Solution {
 public:
    int N;
-    vector<int> countOfPairs(int n, int x, int y) {
-            vector<vector<int>> adj(n+1,vector<int>(n+1,INT_MAX));
-            for(int i=1; i<=n; i++) {
-                if(i+1 <=n) {
-                adj[i][i+1]=1;
-                adj[i+1][i]=1; }
-            }
+        vector<int> bfs(int n,unordered_map<int,vector<int>>& mp,int i) {
 
-            adj[x][y]=1;
-            adj[y][x]=1;
-
-            for(int k=1; k<=n; k++) {
-                for(int i=1; i<=n; i++) {
-                    for(int j=1;  j<=n; j++) {
-                        if(adj[i][k] < INT_MAX && adj[k][j]<INT_MAX) {
-                            adj[i][j]=min(adj[i][j],(adj[i][k]+adj[k][j]));
+                vector<int> dist(n+1,INT_MAX);
+                dist[i]=0;
+                queue<int> q;
+                q.push(i);
+                while(!q.empty()) {
+                    int x=q.front();
+                    q.pop();
+                    for(auto it: mp[x]) {
+                        if(it != x && dist[it]==INT_MAX) {
+                              dist[it]=dist[x]+1;
+                              q.push(it);
                         }
                     }
                 }
+
+                return dist;
+        }
+    vector<int> countOfPairs(int n, int x, int y) {
+           unordered_map<int,vector<int>> mp;
+
+           for(int i=1; i<=n; i++) {
+            if(i+1 <= n) {
+            mp[i].push_back(i+1);
+            mp[i+1].push_back(i);
             }
-            vector<int> res(n,0);
-            for(int i=1; i<=n; i++) {
-                for(int j=1; j<=n; j++) {
-                    if(i!=j && adj[i][j] != INT_MAX) {
-                        int val=adj[i][j];
-                        res[val-1]++;
-                    }
-                }
-             }
-            return res;
+           }
+           mp[x].push_back(y);
+           mp[y].push_back(x);
+vector<int> res(n,0);
+         for(int i=1; i<=n; i++) {
+            vector<int> dist=bfs(n,mp,i);
+            for(int v=1; v<=n; v++) {
+                if( i!= v && dist[v]!=INT_MAX)    res[dist[v]-1]++;
+             
+            }
+         }
                
-        
+        return res;
     }
 };
