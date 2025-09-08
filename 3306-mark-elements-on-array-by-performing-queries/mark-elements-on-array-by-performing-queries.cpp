@@ -33,7 +33,7 @@ long long total=0;
                  
                      
                  }
-                 cout<<total;
+                 
                  res.push_back(total);
 
            }
